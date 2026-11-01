@@ -31,7 +31,7 @@ class ConnectionTest extends TestCase
     public function testFromDsnWithNonArrayHostQueryParameterDoesNotLeakCredentials()
     {
         try {
-            Connection::fromDsn('redis://user:s3cr3t@localhost/queue?host=foo', [], $this->createRedisMock());
+            Connection::fromDsn('redis://user:s3cr3t@localhost/queue?host=foo', [], $this->createStub(\Redis::class));
             $this->fail('An exception should have been thrown.');
         } catch (\InvalidArgumentException $e) {
             $this->assertSame('Invalid Redis DSN: query parameter "host" must be an array.', $e->getMessage());
